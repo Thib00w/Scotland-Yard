@@ -1,0 +1,16 @@
+# Ignorer tous les fichiers temporaires
+*.tmp
+*.log
+*.qodo
+
+# Ignorer le dossier de compilation
+/build/
+dist/
+
+# Ignorer les fichiers système
+.DS_Store
+Thumbs.db
+
+# Ignorer les fichiers Python
+__pycache__/
+*.pyc
