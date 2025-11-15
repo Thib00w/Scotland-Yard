@@ -1,0 +1,33 @@
+/* style.css */
+
+/* Style général de la fenêtre */
+QWidget {
+    background-color: #2E2E2E;
+    font-family: Arial;
+    font-size: 16px;
+}
+
+/* Labels */
+QLabel[class="label"] {
+    color: #FFFFFF;
+    background-color: #444444;
+    border: 1px solid #888888;
+    padding: 10px;
+}
+
+/* Boutons */
+QPushButton[class="button"] {
+    background-color: #555555;
+    color: #FFFFFF;
+    border-radius: 5px;
+    border: 1px solid #888888;
+    padding: 10px;
+}
+
+QPushButton[class="button"]:hover {
+    background-color: #777777;
+}
+
+QPushButton[class="button"]:pressed {
+    background-color: #999999;
+}
