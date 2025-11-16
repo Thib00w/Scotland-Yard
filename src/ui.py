@@ -12,7 +12,7 @@ class Ui(QWidget):
         self.img_lab =QLabel()
         self.txt_chat_lab = QLabel()
         self.button_choice = QLabel()
-        pix = QPixmap("Documentation/Capture_decran_du_2025-11-12_16-21-55.png")
+        pix = QPixmap("../data/Plateau.png")
         print(pix.width(), pix.height()) 
 
         # Position en GridLayout
@@ -32,7 +32,7 @@ class Ui(QWidget):
 
         # Ouverture du fichier css
         try:
-            with open("style.css", "r") as f:
+            with open("./style.cssstyle.css", "r") as f:
                 self.setStyleSheet(f.read())
         except:
             FileNotFoundError 
