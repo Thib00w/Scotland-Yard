@@ -17,5 +17,5 @@ __pycache__/
 
 # Ignorer les fichier Pytest
 *.pytest_cache
-test/
-*__pycache__
+
+test/__pycache__
