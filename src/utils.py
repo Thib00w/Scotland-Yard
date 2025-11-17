@@ -17,7 +17,7 @@ def init_Station_with_csv(file_path: str):
             # Convertion des premiers elements
             numero = int(elements[0])
             x = int(int(elements[1]) * 3.28125) # ratio longueur 3,28125
-            y = int(int(elements[2]) * -3.234200743) # ratio largeur 3,234200743 ( multiplier par -1 pour que carte soit dans le bon sens)
+            y = int(int(elements[2]) * 3.234200743) # ratio largeur 3,234200743 ( multiplier par -1 pour que carte soit dans le bon sens)
             # Traitement des trois suivants : taxi / bus / métro
             access_taxi = [] if elements[3] == "" else [int(e) for e in elements[3].split('-')]
             access_bus = [] if elements[4] == "" else [int(e) for e in elements[4].split('-')]
@@ -29,56 +29,63 @@ def init_Station_with_csv(file_path: str):
     return list_box        
 
 def plot_stations(stations, ax):
-    """Créer un interface MathPlotLib a partir de la lst de stations"""
+    """Créer un interface Matplotlib à partir de la liste des stations"""
     x = [s.dist_x for s in stations]
     y = [s.dist_y for s in stations]
     noms = [s.name for s in stations]
-    # Décalage entre les lignes de liaisons
-    offsets = {'taxi': (0, 0),
-               'bus': (2, 2),
-               'subway': (-2, -2)} 
-
-    ax.figure(figsize=(25, 25))
-    ax.scatter(x, y, color='blue', s=50)
-
+    offsets = {
+        'taxi': (0, 0),
+        'bus': (2, 2),
+        'subway': (-2, -2)
+    }
+    # Points des stations
+    ax.scatter(x, y, color='blue', s=50, zorder=2)
+    # Noms des stations
     for i, name in enumerate(noms):
-        ax.text(x[i] + 5, y[i] + 5, str(name), fontsize=6)
-
+        ax.text(x[i] + 5, y[i] + 5, str(name), fontsize=6, zorder=3)
     # Connexions taxi (orange)
     for s in stations:
         for dest in s.access_to_taxi:
             s2 = next((t for t in stations if t.name == dest), None)
             if s2:
                 ox, oy = offsets['taxi']
-                ax.plot([s.dist_x + ox, s2.dist_x + ox], [s.dist_y + oy, s2.dist_y + oy],
-                         color='orange', linestyle='-', linewidth=0.5)
-                
-    # Connexions Bus (vert)
+                ax.plot(
+                    [s.dist_x + ox, s2.dist_x + ox],
+                    [s.dist_y + oy, s2.dist_y + oy],
+                    color='orange', linestyle='-', linewidth=0.5, zorder=1
+                )
+    # Connexions bus (vert)
     for s in stations:
         for dest in s.access_to_bus:
             s2 = next((t for t in stations if t.name == dest), None)
             if s2:
                 ox, oy = offsets['bus']
-                ax.plot([s.dist_x + ox, s2.dist_x + ox], [s.dist_y + oy, s2.dist_y + oy],
-                         color = 'green', linestyle='--', linewidth=0.5)
-                
-    # Connexion Metro (Rouge)
+                ax.plot(
+                    [s.dist_x + ox, s2.dist_x + ox],
+                    [s.dist_y + oy, s2.dist_y + oy],
+                    color='green', linestyle='--', linewidth=0.5, zorder=1
+                )
+    # Connexions métro (rouge)
     for s in stations:
         for dest in s.access_to_subway:
             s2 = next((t for t in stations if t.name == dest), None)
             if s2:
                 ox, oy = offsets['subway']
-                ax.plot([s.dist_x + ox, s2.dist_x + ox], [s.dist_y + oy, s2.dist_y + oy],
-                         color = 'red', linestyle='-.', linewidth=0.5)
-                
-    ax.axis('off')
+                ax.plot(
+                    [s.dist_x + ox, s2.dist_x + ox],
+                    [s.dist_y + oy, s2.dist_y + oy],
+                    color='red', linestyle='-.', linewidth=0.5, zorder=1
+                )
+    # Enlève les axes sans changer l'échelle
+    ax.set_xticks([])
+    ax.set_yticks([])
     ax.set_frame_on(False)
-    ax.margins(0)
-    ax.set_aspect('equal', adjustable='box')
+    ax.set_aspect('equal')
 
+
+stations = init_Station_with_csv("../data/station.csv")
 if __name__ == "__main__":
     # Chargement des stations
-    stations = init_Station_with_csv("../data/station.csv")
     
     # Affichage des stations chargées
     for st in stations:
