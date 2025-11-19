@@ -40,4 +40,5 @@ Hors contexte du jeu, le projet permet également de :
 ## Contact
 
 Auteur : Thibaut  
-Pour toute question ou suggestion, vous pouvez créer une issue sur le dépôt GitHub.
+Pour toute question ou suggestion, vous pouvez créer une issue sur le dépôt GitHub. 
+Le Projet est en developpement.
